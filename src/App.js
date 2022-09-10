@@ -1,25 +1,44 @@
-import logo from './logo.svg';
+
+import { useState } from 'react';
 import './App.css';
+import Accordian from './components/Accordian';
+import Navbar from './components/Navbar';
+import Textform from './components/Textform';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+
 
 function App() {
+  const [mode, setMode] = useState("dark");
+
+  const togglemode = () => {
+    if (mode === "light") {
+      setMode("dark")
+      document.body.style.backgroundColor = "white"
+
+    } else {
+      setMode("light");
+      document.body.style.backgroundColor = "#7c7da5"
+
+    }
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Navbar title="Textutils" mode={mode} togglemode={togglemode} abouttext="About Text" />
+        <Routes>
+          <Route path="/" element={<div className="container my-4">
+            <Textform heading="Enter the text to analyze below" />
+          </div>} />
+          <Route path="/Accordian" element={<Accordian />} />
+        </Routes>
+      </BrowserRouter>
+
+    </>
   );
 }
+
 
 export default App;
